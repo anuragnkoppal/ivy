@@ -42,21 +42,19 @@ def test_numpy_ptp(
         input_dtypes=input_dtypes,
     )
 
-
-# nanpercentile
+# nanquantile
 @handle_frontend_test(
-    fn_tree="numpy.nanpercentile",
-    dtype_values_axis=_statistical_dtype_values(function="nanpercentile"),
+    fn_tree="numpy.nanquantile",
+    dtype_values_axis=_statistical_dtype_values(function="nanquantile"),
     where=np_frontend_helpers.where(),
     keep_dims=st.booleans(),
 )
-def test_numpy_nanpercentile(
+def test_numpy_nanquantile(
     dtype_values_axis,
     where,
     frontend,
     test_flags,
     fn_tree,
-    backend_fw,
     on_device,
     keep_dims,
 ):
@@ -75,11 +73,10 @@ def test_numpy_nanpercentile(
         q=values[0][1],
         axis=axis,
         out=None,
-        backend_to_test=backend_fw,
         overwrite_input=None,
         method=None,
         keepdims=keep_dims,
-        interpolation=None,
+        interpolation="linear",  # For nanquantile, we set interpolation to "linear".
         frontend=frontend,
         fn_tree=fn_tree,
         test_flags=test_flags,
